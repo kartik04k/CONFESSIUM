@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONFESSIUM</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #89cff0 100%); /* Baby pink to sky blue gradient */
+            min-height: 100vh;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        #confession-box, #your-branch, #target-branch, #your-year, #your-gender, #target-year, #target-gender {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        #submit-btn, #reset-btn, #clear-all-btn, #admin-login-btn, #logout-btn {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #89cff0;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+        }
+        #submit-btn:hover, #reset-btn:hover, #clear-all-btn:hover, #admin-login-btn:hover, #logout-btn:hover {
+            background-color: #77b5d9;
+        }
+        .confession {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .confession strong {
+            display: block;
+            color: #333;
+        }
+        .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .delete-btn:hover {
+            background-color: #cc0000;
+        }
+        #admin-panel {
+            display: none; /* Hidden by default */
+            margin-top: 20px;
+        }
+        #admin-login {
+            margin-top: 20px;
+        }
+        #admin-password {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            width: 200px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        #char-count {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .loading-spinner {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #89cff0;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .instagram-link {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #333;
+        }
+        .instagram-link a {
+            color: #89cff0;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .instagram-link a:hover {
+            text-decoration: underline;
+        }
+        .disclaimer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #777;
+        }
+        .cute-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="cute-icon">🌸</div>
+    <h1>CONFESSIUM</h1>
+    <p>You can confess to someone without actually using their names. Express yourself freely and anonymously!</p>
+    
+    <!-- Dropdowns for user and target details -->
+    <select id="your-branch" required>
+        <option value="" disabled selected>Select Your Branch</option>
+        <option value="CSE">CSE</option>
+        <option value="CSE (D.S.)">CSE (D.S.)</option>
+        <option value="ECE">ECE</option>
+        <option value="VLSI">VLSI</option>
+        <option value="CIVIL">CIVIL</option>
+        <option value="MECHANICAL">MECHANICAL</option>
+        <option value="ELECTRICAL">ELECTRICAL</option>
+    </select><br>
+    
+    <select id="your-year" required>
+        <option value="" disabled selected>Select Your Year</option>
+        <option value="1st Year">1st Year</option>
+        <option value="2nd Year">2nd Year</option>
+        <option value="3rd Year">3rd Year</option>
+        <option value="4th Year">4th Year</option>
+    </select><br>
+    
+    <select id="your-gender" required>
+        <option value="" disabled selected>Select Your Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+    </select><br>
+    
+    <select id="target-branch" required>
+        <option value="" disabled selected>Select Target Branch</option>
+        <option value="CSE">CSE</option>
+        <option value="CSE (D.S.)">CSE (D.S.)</option>
+        <option value="ECE">ECE</option>
+        <option value="VLSI">VLSI</option>
+        <option value="CIVIL">CIVIL</option>
+        <option value="MECHANICAL">MECHANICAL</option>
+        <option value="ELECTRICAL">ELECTRICAL</option>
+    </select><br>
+    
+    <select id="target-year" required>
+        <option value="" disabled selected>Select Target Year</option>
+        <option value="1st Year">1st Year</option>
+        <option value="2nd Year">2nd Year</option>
+        <option value="3rd Year">3rd Year</option>
+        <option value="4th Year">4th Year</option>
+    </select><br>
+    
+    <select id="target-gender" required>
+        <option value="" disabled selected>Select Target Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+    </select><br>
+    
+    <!-- Confession Textarea with Character Counter -->
+    <textarea id="confession-box" placeholder="Write your confession..." rows="4" maxlength="500" aria-label="Confession text area" required></textarea><br>
+    <div id="char-count">500 characters remaining</div>
+    
+    <!-- Buttons -->
+    <button id="submit-btn">Submit</button>
+    <button id="reset-btn" type="reset">Reset</button>
+    
+    <!-- Instagram Link -->
+    <div class="instagram-link">
+        Go to <a href="https://www.instagram.com/_confessium_?igsh=MTlkc2JndnBsZHk0OA==" target="_blank">Instagram</a> to see the confessions!
+    </div>
+    
+    <!-- Admin Login Section -->
+    <div id="admin-login">
+        <input type="password" id="admin-password" placeholder="Enter Admin Password">
+        <button id="admin-login-btn">Login as Admin</button>
+    </div>
+    
+    <!-- Admin Panel (Hidden by Default) -->
+    <div id="admin-panel">
+        <h2>Admin Panel</h2>
+        <button id="logout-btn">Logout</button>
+        <button id="clear-all-btn">Clear All Confessions</button>
+        <div id="confession-count"></div>
+        <div id="confession-list-admin"></div>
+    </div>
+    
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loading-spinner"></div>
+    
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+        Disclaimer: This platform is made for fun. Please do not take it seriously.
+    </div>
+    
+    <script>
+        // Generate a unique user ID if it doesn't exist
+        let userId = localStorage.getItem("userId");
+        if (!userId) {
+            userId = Math.random().toString(36).substring(2) + Date.now().toString(36);
+            localStorage.setItem("userId", userId);
+        }
+
+        // Admin Password (For demo purposes only; avoid hardcoding in production)
+        const ADMIN_PASSWORD = "k@rtik2006";
+
+        // DOM Elements
+        const confessionBox = document.getElementById("confession-box");
+        const charCount = document.getElementById("char-count");
+        const loadingSpinner = document.getElementById("loading-spinner");
+
+        // Character Counter for Confession Textarea
+        confessionBox.addEventListener("input", () => {
+            const remaining = 500 - confessionBox.value.length;
+            charCount.textContent = `${remaining} characters remaining`;
+        });
+
+        // Admin Login Functionality
+        document.getElementById("admin-login-btn").addEventListener("click", function() {
+            const password = document.getElementById("admin-password").value.trim();
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById("admin-panel").style.display = "block";
+                document.getElementById("admin-login").style.display = "none";
+                displayConfessionsAdmin();
+            } else {
+                alert("Incorrect password. Access denied.");
+            }
+        });
+
+        // Logout Functionality
+        document.getElementById("logout-btn").addEventListener("click", function() {
+            document.getElementById("admin-panel").style.display = "none";
+            document.getElementById("admin-login").style.display = "block";
+        });
+
+        // Submit Confession
+        document.getElementById("submit-btn").addEventListener("click", function() {
+            const yourBranch = document.getElementById("your-branch").value.trim();
+            const yourYear = document.getElementById("your-year").value.trim();
+            const yourGender = document.getElementById("your-gender").value.trim();
+            const targetBranch = document.getElementById("target-branch").value.trim();
+            const targetYear = document.getElementById("target-year").value.trim();
+            const targetGender = document.getElementById("target-gender").value.trim();
+            const confession = confessionBox.value.trim();
+
+            if (yourBranch && yourYear && yourGender && targetBranch && targetYear && targetGender && confession) {
+                if (confession.length < 10) {
+                    alert("Confession must be at least 10 characters long.");
+                    return;
+                }
+
+                const confessions = JSON.parse(localStorage.getItem("confessions")) || [];
+                const isDuplicate = confessions.some(conf => 
+                    conf.yourBranch === yourBranch &&
+                    conf.yourYear === yourYear &&
+                    conf.yourGender === yourGender &&
+                    conf.targetBranch === targetBranch &&
+                    conf.targetYear === targetYear &&
+                    conf.targetGender === targetGender &&
+                    conf.confession === confession
+                );
+
+                if (!isDuplicate) {
+                    loadingSpinner.style.display = "block";
+                    setTimeout(() => {
+                        confessions.unshift({ 
+                            id: Math.random().toString(36).substring(2) + Date.now().toString(36),
+                            userId,
+                            yourBranch, 
+                            yourYear, 
+                            yourGender, 
+                            targetBranch, 
+                            targetYear, 
+                            targetGender, 
+                            confession 
+                        });
+                        localStorage.setItem("confessions", JSON.stringify(confessions));
+                        resetForm();
+                        alert("Confession submitted successfully! Check Instagram to see it.");
+                        if (document.getElementById("admin-panel").style.display === "block") {
+                            displayConfessionsAdmin();
+                        }
+                        loadingSpinner.style.display = "none";
+                    }, 1000); // Simulate loading delay
+                } else {
+                    alert("This confession has already been submitted.");
+                }
+            } else {
+                alert("Please fill in all fields.");
+            }
+        });
+
+        // Reset Form
+        document.getElementById("reset-btn").addEventListener("click", resetForm);
+
+        // Clear All Confessions (Admin Only)
+        document.getElementById("clear-all-btn").addEventListener("click", function() {
+            if (confirm("Are you sure you want to delete all confessions? This action cannot be undone.")) {
+                localStorage.removeItem("confessions");
+                alert("All confessions have been cleared.");
+                if (document.getElementById("admin-panel").style.display === "block") {
+                    displayConfessionsAdmin();
+                }
+            }
+        });
+
+        // Display Confessions for Admin
+        function displayConfessionsAdmin() {
+            const confessions = JSON.parse(localStorage.getItem("confessions")) || [];
+            const confessionListAdmin = document.getElementById("confession-list-admin");
+            confessionListAdmin.innerHTML = confessions.map(conf => `
+                <div class="confession">
+                    <button class="delete-btn" data-id="${conf.id}">Delete</button>
+                    <strong>From: ${conf.yourBranch} (${conf.yourYear}, ${conf.yourGender}) | To: ${conf.targetBranch} (${conf.targetYear}, ${conf.targetGender})</strong>
+                    ${conf.confession}
+                </div>
+            `).join('');
+            document.getElementById("confession-count").textContent = `Total Confessions: ${confessions.length}`;
+        }
+
+        // Delete Confession (Admin Only)
+        document.getElementById("confession-list-admin").addEventListener("click", function(e) {
+            if (e.target.classList.contains("delete-btn")) {
+                const confessionId = e.target.getAttribute("data-id");
+                const confessions = JSON.parse(localStorage.getItem("confessions")) || [];
+                const updatedConfessions = confessions.filter(conf => conf.id !== confessionId);
+                localStorage.setItem("confessions", JSON.stringify(updatedConfessions));
+                displayConfessionsAdmin();
+            }
+        });
+
+        // Reset Form Function
+        function resetForm() {
+            document.getElementById("your-branch").value = "";
+            document.getElementById("your-year").value = "";
+            document.getElementById("your-gender").value = "";
+            document.getElementById("target-branch").value = "";
+            document.getElementById("target-year").value = "";
+            document.getElementById("target-gender").value = "";
+            confessionBox.value = "";
+            charCount.textContent = "500 characters remaining";
+        }
+    </script>
+</body>
+</html>
