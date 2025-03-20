@@ -1,2 +1,0 @@
-# CONFESSIUM
-confessing anonymously
